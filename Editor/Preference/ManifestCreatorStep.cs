@@ -38,9 +38,9 @@ namespace NovaFramework.Editor.Preference
     {
         // 保存ManifestConfig为Asset
         string assetPath = "Assets/Editor/AssetBuildConfig/SampleManifestConfig.asset";
-        public void Install(Action onMessage, Action onComplete, Action onError, Action<string> addLog)
+        public void Install(Action onComplete, Action onError)
         {
-            addLog?.Invoke("开始创建资源清单配置");
+            Logger.Info("开始创建资源清单配置");
 
             try
             {
@@ -91,12 +91,12 @@ namespace NovaFramework.Editor.Preference
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
                 
-                addLog?.Invoke($"已创建资源清单配置: {assetPath}");
+                Logger.Info($"已创建资源清单配置: {assetPath}");
             }
             catch (Exception ex)
             {
-                addLog?.Invoke($"创建资源清单配置时出错: {ex.Message}");
-                Debug.LogError($"创建资源清单配置时出错: {ex.Message}\n{ex.StackTrace}");
+                Logger.Info($"创建资源清单配置时出错: {ex.Message}");
+                Logger.Info($"创建资源清单配置时出错: {ex.Message}\n{ex.StackTrace}");
             }
             
             // 调用完成回调
@@ -134,9 +134,9 @@ namespace NovaFramework.Editor.Preference
             return AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
         }
 
-        public void Uninstall(Action onMessage, Action onComplete, Action onError)
+        public void Uninstall(Action onComplete, Action onError)
         {
-            Debug.Log("GooAssetManifestCreator: 执行卸载操作");
+            Logger.Info("GooAssetManifestCreator: 执行卸载操作");
             
             // 卸载逻辑（如果需要）
             // 例如：删除创建的资源清单配置文件
